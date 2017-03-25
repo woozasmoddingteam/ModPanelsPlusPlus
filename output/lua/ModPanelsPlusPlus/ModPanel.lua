@@ -10,13 +10,29 @@ function ModPanel:OnCreate()
     Entity.OnCreate(self)
 	InitMixin(self, UsableMixin)
 
-	self.size = Vector(1.2, 0.66, 0)
-	self.color = Color(1, 1, 1, 1)
-	self.offset = Vector(0, 1.7, 0)
-	self.mass = 1
+	self.size = {0.66 / 2, 1.2 / 2}
+	self.offset = Vector(0, 1, 0)
+
+	self.indices = {
+		0, 1, 2,
+		0, 2, 3,
+	}
+
+	self.vertices = {
+		-1,-1,0,
+		1,-1,0,
+		1,1,0,
+		-1,1,0,
+	}
+
+	self.tex_coords = {
+		0,1,
+		1,1,
+		1,0,
+		0,0,
+	}
 
 	self.modPanelId = 0
-	self:SetRelevancyDistance(20)
 end
 
 function ModPanel:OnInitialized()
@@ -25,31 +41,17 @@ end
 
 function ModPanel:SetOrigin(origin)
 	Entity.SetOrigin(self, origin)
-
-	if Client and self.panel then
-		self.panel:SetOrigin(origin + self.offset)
-	end
-
-	if self.physicsBody then
-		local coords = self.physicsBody:GetCoords()
-		coords.origin = origin + self.offset
-		self.physicsBody:SetCoords(coords)
-	end
-end
-
-function ModPanel:InitializePhysicsBody()
-	if self.physicsBody then
-		Shared.DestroyCollisionObject(self.physicsBody)
-	end
-	local coords = Coords()
-	coords.origin = self:GetOrigin() + self.offset
-	self.physicsBody = Shared.CreatePhysicsBoxBody(false, Vector(0.1, self.size.y, 0.1), self.mass, coords)
+	self:ReInitialize()
 end
 
 if Client then
 	function ModPanel:ReInitialize()
+		if type(self.offset) == "table" then
+			self.offset = Vector(self.offset[1], self.offset[2], self.offset[3])
+		end
+
 		if self.panel then
-			Client.DestroyRenderBillboard(self.panel)
+			Client.DestroyRenderDynamicMesh(self.panel)
 		end
 
 		if self.modPanelId ~= 0 then
@@ -62,26 +64,67 @@ if Client then
 			self:OnReInitialize()
 		end
 
-		self.panel = Client.CreateRenderBillboard()
-        self.panel:SetMaterial(self.material)
-		self.panel:SetOrigin(self:GetOrigin() + self.offset)
-		self.panel:SetSize(self.size)
-		self.panel:SetColor(self.color)
+		self.panel = Client.CreateRenderDynamicMesh(RenderScene.Zone_Default)
+		self.panel:SetMaterial(self.material)
 
-		self:InitializePhysicsBody()
+		local vertices
+
+		if self.size then
+			vertices = {}
+			for i = 1, #self.vertices, 3 do
+				vertices[i]   = self.vertices[i]   * self.size[1]
+				vertices[i+1] = self.vertices[i+1] * self.size[2]
+				vertices[i+2] = 0
+			end
+		else
+			vertices = self.vertices
+		end
+
+		local coords = Coords()
+		coords.origin = self:GetOrigin() + self.offset
+		self.panel:SetIndices(self.indices, #self.indices)
+		self.panel:SetVertices(vertices, #vertices)
+		self.panel:SetTexCoords(self.tex_coords, #self.tex_coords)
+		self.panel:SetCoords(coords)
+		self.panel:SetIsVisible(true)
 
 		if self.OnPostReInitialize then
 			self:OnPostReInitialize()
 		end
+
+		self.lastUpdate = Shared.GetTime()
+	end
+
+	local up = Vector(0, 1, 0)
+	local kRecreationInterval = 5
+	function ModPanel:OnUpdateRender()
+		if Shared.GetTime() - self.lastUpdate > kRecreationInterval then
+			self:ReInitialize()
+		end
+		local player = Client.GetLocalPlayer()
+		local coords = Coords.GetLookAt(self:GetOrigin() + self.offset, player:GetEyePos(), up)
+		self.panel:SetCoords(coords)
 	end
 else
 	function ModPanel:ReInitialize()
-		self:InitializePhysicsBody()
+		if type(self.offset) == "table" then
+			self.offset = Vector(self.offset[1], self.offset[2], self.offset[3])
+		end
+		if self.modPanelId ~= 0 then
+			for k, v in pairs(kModPanels[self.modPanelId]) do
+				self[k] = v
+			end
+		end
 	end
+end
+
+function ModPanel:GetPanelOrigin()
+	return self:GetOrigin() + self.offset
 end
 
 function ModPanel:SetModPanelId(id)
 	self.modPanelId = id
+	self:ReInitialize()
 end
 
 function ModPanel:GetUseAllowedBeforeGameStart()
@@ -94,11 +137,7 @@ end
 
 function ModPanel:OnDestroy()
 	if Client and self.panel then
-		Client.DestroyRenderBillboard(self.panel)
-	end
-
-	if self.physicsBody then
-		Shared.DestroyCollisionObject(self.physicsBody)
+		Client.DestroyRenderDynamicMesh(self.panel)
 	end
 end
 
@@ -107,7 +146,7 @@ function ModPanel:GetCanBeUsed(player, useSuccessTable)
 end
 
 function ModPanel:GetUsablePoints()
-	return {self:GetOrigin() + self.offset}
+	return {self:GetPanelOrigin()}
 end
 
 if Client then

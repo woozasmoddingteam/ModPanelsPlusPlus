@@ -35,3 +35,9 @@ function AddModPanel(values, maybe_url)
 	PrecacheAsset(values.material)
 	table.insert(kModPanels, values)
 end
+
+local quickload = {}
+Shared.GetMatchingFileNames("lua/quickload/*.lua", true, quickload)
+for _, file in ipairs(quickload) do
+	ModLoader.SetupFileHook("lua/Class.lua", file, "post")
+end
