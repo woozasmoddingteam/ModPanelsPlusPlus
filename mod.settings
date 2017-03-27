@@ -13,7 +13,19 @@ Differences:
 - Has server-side configuration
 - More customisation
 
+
+[b]FAQ[/b]
+Q: How do I make my mod panel transparent? (For original ModPanels users)
+A: You make the image itself transparent where it needs to be. There is no need to have an opacity map. Can't be more straight-forward, really.
+
+Q: Why is your mod better?
+A: It just is.
+
+Q: Can I put my mod panel in modpanels/myfolder/ ?
+A: Yes you can; the folder becomes part of the name.
+
 [b]Configuration is inside ModPanels.json[/b]
+
 
 How to make a mod panel:
 
