@@ -1,0 +1,17 @@
+<shader>
+
+	<inputs>
+		<input name="panel" type="texture" address="wrap" srgb="true"/>
+	</inputs>
+
+	<code>
+	<![CDATA[
+		void MaterialShader(in Material_Input input, inout Material material)
+		{
+			material.albedo     = float3(1, 1, 1);
+			material.emissive   = tex2D(panel, input.texCoord).rgb;
+		}
+	]]>
+	</code>
+
+</shader>

@@ -10,7 +10,7 @@ function ModPanel:OnCreate()
     Entity.OnCreate(self)
 	InitMixin(self, UsableMixin)
 
-	self.size = {0.66 / 2, 1.2 / 2}
+	self.size = {0.5, 0.5}
 	self.offset = Vector(0, 1, 0)
 
 	self.indices = {
