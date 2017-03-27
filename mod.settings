@@ -1,7 +1,119 @@
 name        = "ModPanels++"
-source_dir  = "source/"
-output_dir  = "output/"
-description = [=[]=]
+source_dir  = "source"
+output_dir  = "output"
+description = [=[ModPanels++ is a recreation of the ModPanels mod by Nin.
+
+It is compatible with mods that use the old API
+
+Differences:
+- Fewer bugs
+- Mod panels always face you
+- Uses steam browser (in-game one was a bit bugged)
+- Is easier to use
+- Has server-side configuration
+- More customisation
+
+How to make a mod panel:
+
+[b]Example mod: https://steamcommunity.com/sharedfiles/filedetails/?id=892824873[/b]
+
+First, you must find your Natural Selection 2 root folder.
+It will commonly be at:
+C:\Program Files (x86)\Steam\steamapps\common\Natural Selection 2
+
+If not, you can probably figure it out yourself. If not, ask in the comments.
+
+After having found the folder, open the program called Launch Pad. (LaunchPad.exe)
+The path is then:
+C:\Program Files (x86)\Steam\steamapps\common\Natural Selection 2\LaunchPad.exe
+
+This is the tool used to publish mods to workshop.
+
+Now that you the program is open, you must create a new mod.
+
+To do this you must click on the "New" button in the top-left corner.
+
+Then you must specify a location and a mod name.
+You must choose these yourself, but the location must not have any dashes! (-). LaunchPad doesn't like those kinds of paths.
+
+After having made your mod, press on the "Output" button. This will open explorer in the output folder of your mod.
+
+Inside it, make a "modpanels" folder. Make sure to spell it correctly!
+
+Now you must find your image, and open this link:
+https://online-converting.com/image/convert2dds/
+
+This is a tool to convert your image to DDS, which is the only file format (sadly) which Spark can read.
+
+The surface format should be DXT5 and the generate mip maps option should preferrably be yes.
+
+The new resolution should be as much as you want, superscaling the image a bit will help with quality, but increase the size.
+
+The format of both the output and input images can be whatever you want them to be.
+There is no need to for example restrict yourself to 512x512.
+
+Once you're done choosing your options, press the "convert" button.
+
+Your image should begin downloading soon, but it might take a small while (~15 seconds).
+
+The name of the image should be human-readable, as it will be used for the configuration.
+
+Inside the mod panels folder, create a .material file, whose name matches the name of the image.
+
+E.g. scc.dds & scc.material, ghoulbalance.dds & ghoulbalance.material
+
+Then you must open the .material file, and edit its contents.
+
+At the top, you must specify the shader to use, as such:
+shader = "shaders/ModPanel.surface_shader"
+
+Then, you must specify the path to the image.
+The code:
+panel = "modpanels/the_name_of_my_panel.dds"
+
+Together:
+shader = "shaders/ModPanel.surface_shader"
+panel   = "modpanels/the_name_of_my_panel.dds"
+
+You can also specify other variables in the .material file, like `name` and `size`.
+
+`name` will override the name used in the configuration, and is a text parameter "like this".
+`size` is the size of the mod panel.
+They are specified like such:
+[code]
+name = "some_other_magical_name, spaces are actually allowed though."
+size = {0.5, 1}
+[/code]
+
+This will make it 0.5 magic units wide, and 1 magic unit tall.
+
+The default is {0.5, 0.5}
+
+(Some day in the future, it might be possible to automate this and be able to omit the .material file entirely, but currently the spark engine doesn't support that.)
+
+Now, your .material file is finished.
+Save your edits and look back at your launchpad window.
+
+Now you must press the "Publish" button, this will open another window, where you will have to press on the other "Publish".
+
+Now, your mod will begin publishing.
+
+Once you're done, go back to your output folder.
+
+Now go the parent folder, which is accessible on explorer with the ^ button, on the left side of the address field.
+
+This should take you to the folder, which you chose to use as your mod folder.
+
+Inside here, there will be a mod.settings file.
+
+There will be a bunch of stuff here, mostly irrelevant, other than the "publish_id" field.
+
+This is a string of the mod id.
+
+You must now add this mod id to your map cycle, to add the mod.
+
+[b]Example mod: https://steamcommunity.com/sharedfiles/filedetails/?id=892824873[/b]]=]
 image       = "preview.jpg"
-tag_modtype = ""
-tag_support = ""
+tag_modtype = "Tool"
+tag_support = "Must be run on Server"
+publish_id = "3536f85e"

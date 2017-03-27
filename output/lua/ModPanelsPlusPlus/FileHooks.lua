@@ -44,6 +44,7 @@ Shared.GetMatchingFileNames("modpanels/*.material", true, panels)
 for _, file in ipairs(panels) do
 	local data = {}
 	setfenv(assert(loadfile(file)), data)()
+	data.panel = nil
 	data.material = file
 	local name, path = parse_path(file)
 	path = path .. ".lua"
