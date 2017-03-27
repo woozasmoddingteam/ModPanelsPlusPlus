@@ -11,16 +11,14 @@ local dot = string.byte('.')
 local slash = string.byte('/')
 
 local function parse_path(path)
-	local stop
-	for i = #path, 1, -1 do
-		if path:byte(i) == dot then
-			stop = i-1
-		elseif path:byte(i) == slash then
-			return path:sub(i+1, stop), path:sub(1, stop)
-		end
-	end
-	local v = path:sub(1, stop)
-	return v, v
+	local start, stop = 1, #path
+	repeat
+		stop = stop - 1
+	until path:byte(stop+1) == dot
+	repeat
+		start = start + 1
+	until path:byte(start-1) == slash
+	return path:sub(start, stop)
 end
 
 function AddModPanel(values, maybe_url)
@@ -46,10 +44,11 @@ for _, file in ipairs(panels) do
 	setfenv(assert(loadfile(file)), data)()
 	data.panel = nil
 	data.material = file
-	local name, path = parse_path(file)
-	path = path .. ".lua"
-	if GetFileExists(path) then
-		assert(loadfile(path))(data)
+	local name = parse_path(file)
+	local lua_file = "modpanels/" .. path .. ".lua"
+	if GetFileExists(lua_file) then
+		assert(loadfile(lua_file))(data)
 	end
+	data.name = name
 	AddModPanel(data)
 end
