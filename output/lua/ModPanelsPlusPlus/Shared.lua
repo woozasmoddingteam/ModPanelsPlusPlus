@@ -72,7 +72,7 @@ if Server then
 
 				modPanel:SetOrigin(body:GetPosition() - Vector(0, radius, 0))
 
-				table.insert(bodies, body)
+				Shared.DestroyCollisionObject(body)
 
 				Log("Mod Panel '%s' created at %s", modPanel.name, modPanel:GetOrigin())
 
