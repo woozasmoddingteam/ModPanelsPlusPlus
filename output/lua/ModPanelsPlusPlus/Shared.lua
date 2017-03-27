@@ -29,10 +29,10 @@ if Server then
 		local spawnPoints = Server.readyRoomSpawnList
 
 		local teamjoins = GetEntities("TeamJoin")
-		local teamjoinbodies = {}
+		local bodies = {}
 		for i = 1, #teamjoins do
-			teamjoinbodies[i] = Shared.CreatePhysicsBoxBody(false, Vector(3, 2, 2), 1, teamjoins[i]:GetCoords())
-			initBody(teamjoinbodies[i])
+			bodies[i] = Shared.CreatePhysicsBoxBody(false, Vector(3, 2, 2), 1, teamjoins[i]:GetCoords())
+			initBody(bodies[i])
 		end
 
 		local config = LoadConfigFile("ModPanels.json", {})
@@ -72,7 +72,7 @@ if Server then
 
 				modPanel:SetOrigin(body:GetPosition() - Vector(0, radius, 0))
 
-				Shared.DestroyCollisionObject(body)
+				table.insert(bodies, body)
 
 				Log("Mod Panel '%s' created at %s", modPanel.name, modPanel:GetOrigin())
 
@@ -80,8 +80,8 @@ if Server then
 
 		end
 
-		for i = 1, #teamjoinbodies do
-			Shared.DestroyCollisionObject(teamjoinbodies[i])
+		for i = 1, #bodies do
+			Shared.DestroyCollisionObject(bodies[i])
 		end
 
 		if configChanged then
