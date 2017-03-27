@@ -13,6 +13,8 @@ Differences:
 - Has server-side configuration
 - More customisation
 
+[b]Configuration is inside ModPanels.json[/b]
+
 How to make a mod panel:
 
 [b]Example mod: https://steamcommunity.com/sharedfiles/filedetails/?id=892824873[/b]
