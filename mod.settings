@@ -34,8 +34,21 @@ This table will be what you specify in the .material file & some other things.
 The variables of the data table are then applied to the mod panel.
 Look at the source on github.
 
-[b]Configuration is inside ModPanels.json[/b]
 
+[b]Server-side configuration is inside ModPanels.json[/b]
+It's just a hash map, with the names of the mod panels as values.
+If a mod panel's name has false as value, it's not shown in-game.
+
+Example:
+[code]
+{
+  "ghoulbalance": true,
+  "marchmodmadness": false // It's already over!
+}
+[/code]
+
+New mod panels will be added to the configuration automatically, and their default value will be `true`.
+Thus, you shouldn't store comments inside your configuration, as they will be overwritten if a new mod panel gets detected, or the name of an existing one changes.
 
 How to make a mod panel:
 
