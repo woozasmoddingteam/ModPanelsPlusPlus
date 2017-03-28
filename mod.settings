@@ -3,6 +3,8 @@ source_dir  = "source"
 output_dir  = "output"
 description = [=[ModPanels++ is a recreation of the ModPanels mod by Nin.
 
+[b]Github repository: https://github.com/Laaas/ModPanelsPlusPlus[/b]
+
 It is compatible with mods that use the old API
 
 Differences:
@@ -12,6 +14,7 @@ Differences:
 - Is easier to use
 - Has server-side configuration
 - More customisation
+- Better spawn positions
 
 
 [b]FAQ[/b]
@@ -23,6 +26,13 @@ A: It just is.
 
 Q: Can I put my mod panel in modpanels/myfolder/ ?
 A: Yes you can; the folder becomes part of the name.
+
+Q: I want more customisation
+A:
+If you create a .lua file for your .dds file just as with your .material file, it will get executed with a `data` table passed.
+This table will be what you specify in the .material file & some other things.
+The variables of the data table are then applied to the mod panel.
+Look at the source on github.
 
 [b]Configuration is inside ModPanels.json[/b]
 
