@@ -39,10 +39,7 @@ end
 
 local panels = {}
 Shared.GetMatchingFileNames("modpanels/*.material", true, panels)
-local counter = 0
 for _, file in ipairs(panels) do
-	counter = counter + 1
-	Log("File: %s, counter: %s", file, counter)
 	local data = {}
 	setfenv(assert(loadfile(file)), data)()
 	data.panel = nil
@@ -53,6 +50,6 @@ for _, file in ipairs(panels) do
 		assert(loadfile(lua_file))(data)
 	end
 	data.name = data.name or name
-	Log("Name: %s", data.name)
+	Log("Mod panel %s detected", data.name)
 	AddModPanel(data)
 end
