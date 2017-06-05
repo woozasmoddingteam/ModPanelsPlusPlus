@@ -51,7 +51,9 @@ if Server then
 
 			if config[name] then
 
-				local spawnPoint = spawnPoints[math.random(#spawnPoints)]:GetOrigin()
+				local spawnPoint = spawnPoints[
+					(index - 1) % #spawnPoints + 1
+				]:GetOrigin()
 
 				local modPanel = CreateEntity(
 					ModPanel.kMapName,
