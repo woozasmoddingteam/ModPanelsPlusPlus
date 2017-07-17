@@ -96,11 +96,7 @@ if Client then
 	end
 
 	local up = Vector(0, 1, 0)
-	local kRecreationInterval = 5
 	function ModPanel:OnUpdateRender()
-		if Shared.GetTime() - self.lastUpdate > kRecreationInterval then
-			self:ReInitialize()
-		end
 		local player = Client.GetLocalPlayer()
 		local coords = Coords.GetLookAt(self:GetOrigin() + self.offset, player:GetEyePos(), up)
 		self.panel:SetCoords(coords)
