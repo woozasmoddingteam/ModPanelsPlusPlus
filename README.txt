@@ -1,7 +1,4 @@
-name        = "ModPanels++"
-source_dir  = "source"
-output_dir  = "output"
-description = [=[ModPanels++ is a recreation of the ModPanels mod by Nin.
+ModPanels++ is a recreation of the ModPanels mod by Nin.
 
 [b]Github repository: https://github.com/Laaas/ModPanelsPlusPlus[/b]
 
@@ -151,8 +148,4 @@ This is a string of the mod id.
 
 You must now add this mod id to your map cycle, to add the mod.
 
-[b]Example mod: https://steamcommunity.com/sharedfiles/filedetails/?id=892824873[/b]]=]
-image       = "preview.jpg"
-tag_modtype = "Tool"
-tag_support = "Must be run on Server"
-publish_id = "3536f85e"
+[b]Example mod: https://steamcommunity.com/sharedfiles/filedetails/?id=892824873[/b]

@@ -1,0 +1,7 @@
+
+[master]
+name            = "ModPanels++"
+tags            = ["Tool", "Must be run on Server"]
+autodescription = true
+description     = "README.txt"
+preview         = "preview.jpg"
