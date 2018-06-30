@@ -31,7 +31,7 @@ if Server then
 				panel:ReInitialize()
 				panel:SetOrigin(spawnpoint)
 
-				Print("Mod Panel '%s' created", panel.name)
+				Print("Mod panel '%s' created", panel.name)
 			end
 		end
 
