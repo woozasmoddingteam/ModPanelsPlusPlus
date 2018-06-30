@@ -1,7 +1,14 @@
 
 [master]
-name            = "ModPanels++"
+name            = "Mod Panels++"
 tags            = ["Tool", "Must be run on Server"]
 autodescription = true
-description     = "README.txt"
+description     = "README.md"
+preview         = "preview.jpg"
+
+[beta]
+name            = "Mod Panels++ - beta"
+tags            = ["Tool", "Must be run on Server"]
+autodescription = false
+description     = "description.beta.txt"
 preview         = "preview.jpg"
