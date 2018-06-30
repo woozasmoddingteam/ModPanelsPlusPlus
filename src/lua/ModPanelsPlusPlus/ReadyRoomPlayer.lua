@@ -38,88 +38,88 @@ AddMixinNetworkVars(MarineVariantMixin, networkVars)
 
 function ReadyRoomPlayer:OnCreate()
 
-    InitMixin(self, BaseMoveMixin, { kGravity = Player.kGravity })
-    InitMixin(self, GroundMoveMixin)
-    InitMixin(self, JumpMoveMixin)
-    InitMixin(self, CrouchMoveMixin)
-    InitMixin(self, LadderMoveMixin)
-    InitMixin(self, CameraHolderMixin, { kFov = kDefaultFov })
-    InitMixin(self, ScoringMixin, { kMaxScore = kMaxScore })
-    InitMixin(self, MarineVariantMixin )
+	InitMixin(self, BaseMoveMixin, { kGravity = Player.kGravity })
+	InitMixin(self, GroundMoveMixin)
+	InitMixin(self, JumpMoveMixin)
+	InitMixin(self, CrouchMoveMixin)
+	InitMixin(self, LadderMoveMixin)
+	InitMixin(self, CameraHolderMixin, { kFov = kDefaultFov })
+	InitMixin(self, ScoringMixin, { kMaxScore = kMaxScore })
+	InitMixin(self, MarineVariantMixin )
 
-    Player.OnCreate(self)
+	Player.OnCreate(self)
 
 	InitMixin(self, RagdollMixin)
 
-    self:SetModel(MarineVariantMixin.kDefaultModelName, MarineVariantMixin.kMarineAnimationGraph)
+	self:SetModel(MarineVariantMixin.kDefaultModelName, MarineVariantMixin.kMarineAnimationGraph)
 
-    if Client and Client.GetLocalPlayer() == self then
+	if Client and Client.GetLocalPlayer() == self then
 
-        self.actionIconGUI = GetGUIManager():CreateGUIScript("GUIActionIcon")
-        self.actionIconGUI:SetColor(kMarineFontColor)
-        self.actionIconGUI:Hide()
+		self.actionIconGUI = GetGUIManager():CreateGUIScript("GUIActionIcon")
+		self.actionIconGUI:SetColor(kMarineFontColor)
+		self.actionIconGUI:Hide()
 
-    end
+	end
 
 end
 
 function ReadyRoomPlayer:GetPlayerStatusDesc()
-    return kPlayerStatus.Void
+	return kPlayerStatus.Void
 end
 
 if Client then
 
-    function ReadyRoomPlayer:OnCountDown()
-    end
+	function ReadyRoomPlayer:OnCountDown()
+	end
 
-    function ReadyRoomPlayer:OnCountDownEnd()
-    end
+	function ReadyRoomPlayer:OnCountDownEnd()
+	end
 
 end
 
 function ReadyRoomPlayer:GetHealthbarOffset()
-    return 0.85
+	return 0.85
 end
 
 function ReadyRoomPlayer:OnDestroy()
 
-    Player.OnDestroy(self)
+	Player.OnDestroy(self)
 
-    if Client and self.actionIconGUI then
+	if Client and self.actionIconGUI then
 
-        GetGUIManager():DestroyGUIScript(self.actionIconGUI)
-        self.actionIconGUI = nil
+		GetGUIManager():DestroyGUIScript(self.actionIconGUI)
+		self.actionIconGUI = nil
 
-    end
+	end
 
 end
 
 function ReadyRoomPlayer:GetCanDieOverride()
-    return true
+	return true
 end
 
 if Client then
 
-    function ReadyRoomPlayer:OnProcessMove(input)
+	function ReadyRoomPlayer:OnProcessMove(input)
 
-        Player.OnProcessMove(self, input)
+		Player.OnProcessMove(self, input)
 
-        local ent = self:PerformUseTrace()
-        if ent then
+		local ent = self:PerformUseTrace()
+		if ent then
 
-            if GetPlayerCanUseEntity(self, ent) and not self:GetIsUsing() then
+			if GetPlayerCanUseEntity(self, ent) and not self:GetIsUsing() then
 
-                self.actionIconGUI:ShowIcon(BindingsUI_GetInputValue("Use"), nil, nil, nil)
+				self.actionIconGUI:ShowIcon(BindingsUI_GetInputValue("Use"), nil, nil, nil)
 
-                return
+				return
 
-            end
+			end
 
-        end
+		end
 
-        self.actionIconGUI:Hide()
+		self.actionIconGUI:Hide()
 
-    end
+	end
 
 end
 

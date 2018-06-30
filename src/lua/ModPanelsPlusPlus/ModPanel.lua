@@ -7,7 +7,7 @@ local networkVars = {
 }
 
 function ModPanel:OnCreate()
-    Entity.OnCreate(self)
+	Entity.OnCreate(self)
 	InitMixin(self, UsableMixin)
 
 	self.size = {0.5, 0.5}
@@ -138,7 +138,7 @@ function ModPanel:OnDestroy()
 end
 
 function ModPanel:GetCanBeUsed(player, useSuccessTable)
-    useSuccessTable.useSuccess = self.url ~= nil
+	useSuccessTable.useSuccess = self.url ~= nil
 end
 
 function ModPanel:GetUsablePoints()
@@ -146,8 +146,8 @@ function ModPanel:GetUsablePoints()
 end
 
 if Client then
-    function ModPanel:OnUse()
+	function ModPanel:OnUse()
 		Client.ShowWebpage(self.url)
-    end
+	end
 end
 Shared.LinkClassToMap("ModPanel", ModPanel.kMapName, networkVars, true)
