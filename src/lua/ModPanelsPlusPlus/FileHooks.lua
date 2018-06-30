@@ -45,6 +45,5 @@ for _, file in ipairs(panels) do
 		assert(loadfile(lua_file))(data)
 	end
 	data.name = data.name or name
-	Log("Mod panel %s detected", data.name)
 	AddModPanel(data)
 end
