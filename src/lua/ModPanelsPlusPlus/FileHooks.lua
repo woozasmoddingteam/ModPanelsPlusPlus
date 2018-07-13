@@ -1,4 +1,5 @@
 ModLoader.SetupFileHook("lua/Gamerules.lua", "lua/ModPanelsPlusPlus/Gamerules.lua", "post")
+ModLoader.SetupFileHook("lua/ModPanels/FileHooks.lua", true, "halt")
 
 kModPanels = {}
 
