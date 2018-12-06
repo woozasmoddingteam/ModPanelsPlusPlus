@@ -43,7 +43,7 @@ Each key-value pair is on a separate line.
 
 An example descriptor is:
 ```
-shader = "shader/ModPanel.surface_shader"
+shader = "shaders/ModPanel.surface_shader"
 panel  = "modpanels/wooza/badges.tga"
 url    = "https://google.com"
 name   = "my-awesome-tall-floating-shader-with-an-extremely-long-name"
